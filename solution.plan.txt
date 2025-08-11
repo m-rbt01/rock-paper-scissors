@@ -36,19 +36,20 @@ ALGORITHM:
     FOR five rounds 
         GET user choice
         CALCULATE the computer's random choice
-        DETERMINE the winner of the current round
-            IF both choices are the same THEN 
-                DISPLAY draw
-                RESTART the round
-            ELSE-IF user choice is Rock AND computer chose Scissors,
-            OR user choice is Scissors AND computer chose Paper, OR
-            user choice is Paper AND computer chose Rock THEN
-                INCREMENT user score
-                DISPLAY that the user won the current round
-            ELSE
-                INCREMENT computer score 
-                DISPLAY that the user lost the current round
-            ENDIF
+        DISPLAY player choices for the current round
+        IF both choices are the same THEN 
+            DISPLAY draw
+            RESTART the round
+        ELSE-IF user choice is Rock AND computer chose Scissors,
+        OR user choice is Scissors AND computer chose Paper, OR
+        user choice is Paper AND computer chose Rock THEN
+            INCREMENT user score
+            DISPLAY that the user won the current round
+        ELSE
+            INCREMENT computer score 
+            DISPLAY that the user lost the current round
+        ENDIF
+        DISPLAY the updated score board
     ENDFOR
     IF user score is greater than computer score THEN
         DISPLAY that the user won the game

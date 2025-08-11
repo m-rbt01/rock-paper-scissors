@@ -36,6 +36,9 @@ ALGORITHM:
     FOR five rounds 
         GET user choice
         CALCULATE the computer's random choice
+        IF the user quits the game THEN 
+            TERMINATE the program
+        ENDIF
         DISPLAY player choices for the current round
         IF both choices are the same THEN 
             DISPLAY draw

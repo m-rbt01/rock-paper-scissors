@@ -25,22 +25,28 @@ function getComputerChoice(){
 }
 
 function getHumanChoice(){
-    return prompt("Rock, Paper, or Scissors? Enter Your Choice:").toLowerCase(); //Convert user choice to lowercase and return the result
+    //Convert user choice to lowercase
+    let temp = prompt(`"Rock", "Paper", or "Scissors"? Enter Your Choice:`).toLowerCase();
+    if((temp != ROCK) && (temp != PAPER) && (temp != SCISSORS)){ //input validation
+        alert(`${temp} is not a valid choice.`);
+        return getHumanChoice(); //input again
+    }
+    return temp; //return valid input
 }
 
 function playRound(userChoice, cpuChoice){
     console.log(`User choice: ${userChoice} CPU choice: ${cpuChoice}`); //display player choices
-    if(userChoice === cpuChoice){ //draw
-        console.log("Draw");
+    if(userChoice === cpuChoice){ //Round draw
+        alert("Round Draw.");
         playRound(getHumanChoice(), getComputerChoice());
     }
     else if((userChoice === ROCK && cpuChoice === SCISSORS) ||
     (userChoice === SCISSORS && cpuChoice === PAPER) || 
-    (userChoice === PAPER && cpuChoice === ROCK)){ //User won
+    (userChoice === PAPER && cpuChoice === ROCK)){ //User won the current round
         ++userScore;
         console.log(`You won! ${userChoice} beats ${cpuChoice}`);
     }
-    else{ //User lost
+    else{ //User lost the current round
         ++cpuScore;
         console.log(`You lose. ${cpuChoice} beats ${userChoice}`);
     }
@@ -49,16 +55,17 @@ function playRound(userChoice, cpuChoice){
 function playGame(){
     for(let i = 1; i <= NUM_ROUNDS; i++){
         console.log(`-------ROUND ${i}------`);
-        playRound(getHumanChoice(), getComputerChoice());
+        playRound(getHumanChoice(), getComputerChoice()); //play a single round
+        console.log(`User Score: ${userScore} CPU Score: ${cpuScore}`); //display updated score
     }
     console.log("-------GAME OVER-------")
-    if(userScore > cpuScore){
+    if(userScore > cpuScore){ //User won the game
         console.log("You won the game!");
     }
-    else if(cpuScore > userScore){
+    else if(cpuScore > userScore){ //User lost the game
         console.log("You lost the game.");
     }
-    else{
+    else{ //Game draw
         console.log("Draw. No winner.");
     }
 }

@@ -4,6 +4,7 @@ const NUM_ROUNDS = 5; //total number of rounds within a game
 const ROCK = "rock";
 const SCISSORS = "scissors";
 const PAPER = "paper";
+const QUIT = -1; //user quit sentinel 
 
 //Global Variables
 let userScore = 0;
@@ -25,30 +26,41 @@ function getComputerChoice(){
 }
 
 function getHumanChoice(){
-    //Convert user choice to lowercase
-    let temp = prompt(`"Rock", "Paper", or "Scissors"? Enter Your Choice:`).toLowerCase();
+    let temp; //holds user choice
+    try{ //Get user choice, convert to lowercase
+        temp = prompt(`"Rock" | "Paper" | "Scissors"? Please Enter Your Choice: (or click Cancel to quit)`).trim().toLowerCase();
+    }
+    catch(error){ //User canceled input
+        alert("Thank you for playing!");
+        return QUIT;
+    }
     if((temp != ROCK) && (temp != PAPER) && (temp != SCISSORS)){ //input validation
         alert(`${temp} is not a valid choice.`);
-        return getHumanChoice(); //input again
+        return getHumanChoice(); //get input again
     }
     return temp; //return valid input
 }
 
 function playRound(userChoice, cpuChoice){
-    console.log(`User choice: ${userChoice} CPU choice: ${cpuChoice}`); //display player choices
-    if(userChoice === cpuChoice){ //Round draw
-        alert("Round Draw.");
-        playRound(getHumanChoice(), getComputerChoice());
+    if(userChoice === QUIT){
+
     }
-    else if((userChoice === ROCK && cpuChoice === SCISSORS) ||
-    (userChoice === SCISSORS && cpuChoice === PAPER) || 
-    (userChoice === PAPER && cpuChoice === ROCK)){ //User won the current round
-        ++userScore;
-        console.log(`You won! ${userChoice} beats ${cpuChoice}`);
-    }
-    else{ //User lost the current round
-        ++cpuScore;
-        console.log(`You lose. ${cpuChoice} beats ${userChoice}`);
+    else{
+        console.log(`User choice: ${userChoice} CPU choice: ${cpuChoice}`); //display player choices
+        if(userChoice === cpuChoice){ //Round draw
+            alert("Round Draw.");
+            playRound(getHumanChoice(), getComputerChoice());
+        }
+        else if((userChoice === ROCK && cpuChoice === SCISSORS) ||
+        (userChoice === SCISSORS && cpuChoice === PAPER) || 
+        (userChoice === PAPER && cpuChoice === ROCK)){ //User won the current round
+            ++userScore;
+            console.log(`You won! ${userChoice} beats ${cpuChoice}`);
+        }
+        else{ //User lost the current round
+            ++cpuScore;
+            console.log(`You lose. ${cpuChoice} beats ${userChoice}`);
+        }
     }
 }
 

@@ -45,21 +45,20 @@ function playRound(userChoice, cpuChoice){
     if(userChoice === QUIT){ //cancel the current round if the user quit
         return QUIT;
     }
-    //Evaluate the winner of the current round
-    console.log(`User choice: ${userChoice} CPU choice: ${cpuChoice}`); //display player choices
+    //Evaluate the winner of the current round and display results
     if(userChoice === cpuChoice){ //Round draw
-        alert("Round Draw.");
+        alert(`Round Draw.\nBoth players chose ${userChoice}`);
         return playRound(getHumanChoice(), getComputerChoice()); //restart current round
     }
     else if((userChoice === ROCK && cpuChoice === SCISSORS) ||
     (userChoice === SCISSORS && cpuChoice === PAPER) || 
     (userChoice === PAPER && cpuChoice === ROCK)){ //User won the current round
         ++userScore;
-        console.log(`You won! ${userChoice} beats ${cpuChoice}`);
+        alert(`You won!\n${userChoice} beats ${cpuChoice}`);
     }
     else{ //User lost the current round
         ++cpuScore;
-        console.log(`You lose. ${cpuChoice} beats ${userChoice}`);
+        alert(`You lose.\n${cpuChoice} beats ${userChoice}`);
     }
 }
 
@@ -67,23 +66,22 @@ function playRound(userChoice, cpuChoice){
 function playGame(){
     //Iterate through the total number of rounds
     for(let i = 1; i <= NUM_ROUNDS; i++){
-        console.log(`-------ROUND ${i}------`); //display the current round
-        if(playRound(getHumanChoice(), getComputerChoice()) === QUIT){ //play a single round, unless the user quit
+        alert(`-------------Round ${i}/${NUM_ROUNDS}-------------\nUser Score: ${userScore} CPU Score: ${cpuScore}`); //display the current round and player scores
+        if(playRound(getHumanChoice(), getComputerChoice()) === QUIT){ //play a single round, if the user quit then end the game
             alert("Thank you for playing!");
-            console.log("User quit the game.");
             break;
         } 
-        console.log(`User Score: ${userScore} CPU Score: ${cpuScore}`); //display updated score
     }
     //Display the game's winner
-    console.log("-------GAME OVER-------")
+    let results = `-------------Results-------------\nUser Score: ${userScore} CPU Score: ${cpuScore}`; //concatenate the result string based on the scores
     if(userScore > cpuScore){ //User won the game
-        console.log("You won the game!");
+        results += "\nYou won the game!";
     }
     else if(cpuScore > userScore){ //User lost the game
-        console.log("You lost the game.");
+        results += "\nYou lost the game.";
     }
     else{ //Game draw
-        console.log("Draw. No winner.");
+        results += "\nGame draw. No winner.";
     }
+    alert(results);
 }

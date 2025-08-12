@@ -73,15 +73,21 @@ function playGame(){
         } 
     }
     //Display the game's winner
-    let results = `-------------Results-------------\nUser Score: ${userScore} CPU Score: ${cpuScore}`; //concatenate the result string based on the scores
+    displayResults();
+}
+
+//***ADD RESULTS TO PAGE***/
+function displayResults(){
+    const resultsPar = document.getElementById("game-results"); //get the page's existing paragraph element 
+    resultsPar.innerHTML = `-------------Results-------------<br>User Score: ${userScore} CPU Score: ${cpuScore}<br>`; //display user scores
+    //display the winner
     if(userScore > cpuScore){ //User won the game
-        results += "\nYou won the game!";
+        resultsPar.innerHTML += "You won the game!";
     }
     else if(cpuScore > userScore){ //User lost the game
-        results += "\nYou lost the game.";
+        resultsPar.innerHTML += "You lost the game.";
     }
     else{ //Game draw
-        results += "\nGame draw. No winner.";
+        resultsPar.innerHTML += "Game draw. No winner.";
     }
-    alert(results);
 }

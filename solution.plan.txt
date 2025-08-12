@@ -60,3 +60,7 @@ ALGORITHM:
     ELSE
         DISPLAY a game draw
     ENDIF
+    CALL playAgain WHEN user clicks the reset button
+        set user score to 0
+        set cpu score to 0
+        CALL playGame

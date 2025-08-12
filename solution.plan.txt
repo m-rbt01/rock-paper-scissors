@@ -33,13 +33,13 @@ PLAN:
         display game winner.
 
 ALGORITHM:
-    FOR five rounds 
+    FOR five rounds
+        DISPLAY the current scores
         GET user choice
         CALCULATE the computer's random choice
         IF the user quits the game THEN 
-            TERMINATE the program
+            TERMINATE the game
         ENDIF
-        DISPLAY player choices for the current round
         IF both choices are the same THEN 
             DISPLAY draw
             RESTART the round
@@ -52,12 +52,11 @@ ALGORITHM:
             INCREMENT computer score 
             DISPLAY that the user lost the current round
         ENDIF
-        DISPLAY the updated score board
     ENDFOR
     IF user score is greater than computer score THEN
         DISPLAY that the user won the game
     ELSE-IF computer score is greater than user score THEN
-        DISPLAY that the computer won the game
+        DISPLAY that the yser lost the game
     ELSE
-        DISPLAY draw
+        DISPLAY a game draw
     ENDIF

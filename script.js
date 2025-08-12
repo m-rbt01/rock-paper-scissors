@@ -95,4 +95,14 @@ function displayResults(){
     }
 }
 
-playGame() //start the game on page load
+//***RESTART THE GAME***/
+function playAgain(){
+    userScore = 0;
+    cpuScore = 0;
+    playGame();
+}
+
+//On Page Load
+const restartButton = document.getElementById("restart-game"); //get the page's existing button element
+restartButton.addEventListener("click", playAgain); //play game again when the user clicks restart button
+playGame() //start the game

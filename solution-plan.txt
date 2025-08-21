@@ -7,11 +7,11 @@ on the player with the most points.
       Rock.
     * Computer choice is randomly generated, and returned by a 
       function.
-    * User choice function is case-insensitive, prompting the
-      user for their choice.
+    * User choice is made with buttons.
     * The program keeps track of the winner of each round with 
       scores for both players.
     * The winner of each round is announced.
+    * The game winner is announced after a player reaches 5 points
 
 PLAN:
     * UI -
@@ -39,12 +39,14 @@ PLAN:
         display game results
 
 ALGORITHM:
-    LISTEN for button selections, respond as long as game is NOT over
+    LISTEN for button selections
         CALL the play game function
             GET user choice
             CALCULATE the computer's random choice
                 CALL the play round function and PASS player choices
-                    DISPLAY current round
+                    DISPLAY current 
+                    DISPLAY player scores
+                    DISPLAY player choices
                     IF both choices are the same THEN 
                         DISPLAY draw
                         EXIT the round 
@@ -55,12 +57,9 @@ ALGORITHM:
                     ELSE
                         INCREMENT computer score 
                     ENDIF
-                    DISPLAY player scores
-                    DISPLAY player choices
                     INCREMENT the round
                 ENDCALL
             IF one or both users reach 5 points THEN
-                SET game over
                 CALL display results
                     IF user score is greater than computer score THEN
                         DISPLAY that the user won the game
@@ -69,7 +68,8 @@ ALGORITHM:
                     ELSE
                         DISPLAY a game draw
                     ENDIF
-                    SET the play again button to not hidden
+                    TOGGLE the reset button hidden class to show it 
+                    TOGGLE the rps button selection hidden class to hide them
                 ENDCALL
             ENDIF
         ENDCALL
@@ -80,7 +80,7 @@ ALGORITHM:
             SET user score to 0
             SET cpu score to 0
             SET round back to 1
-            SET game over to false
             RESET UI display elements
-            SET reset button back to hidden for the new game
+            TOGGLE reset button hidden class to hide buttons
+            TOGGLE rps button selection hidden class to show buttons
     ENDLISTEN

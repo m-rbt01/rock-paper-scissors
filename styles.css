@@ -2,15 +2,23 @@ body{
     text-align: center;
 }
 .user-won{
-    color: green;
+    color: rgb(0, 179, 0);
 }
 .user-lost{
-    color: red;
+    color: rgb(176, 0, 0);
 }
-#restart-game{
-    background-color: rgb(104, 104, 244);
-    color: white;
+
+.hidden{
+    display: none;
+}
+
+button{
     border-radius: 4px;
     padding: 4px 8px;
     cursor: pointer;
+}
+
+button#restart-game{
+    background-color: rgb(104, 104, 244);
+    color: white;
 }

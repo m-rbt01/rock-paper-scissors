@@ -7,7 +7,7 @@ const SCISSORS = "Scissors";
 
 //GLOBAL VARIABLES
 let round = 1;
-let userScore = 0;
+let playerScore = 0;
 let cpuScore = 0;
 
 //***CALCULATE THE COMPUTER'S CHOICE***
@@ -24,8 +24,8 @@ function getComputerChoice(){
     }
 }
 
-//***GET THE USER'S CHOICE***
-function getHumanChoice(targetId){
+//***GET THE PLAYER'S CHOICE***
+function getPlayerChoice(targetId){
     switch(targetId){
         case "rock-selection":
             return ROCK;
@@ -37,74 +37,80 @@ function getHumanChoice(targetId){
 }
 
 //***DETERMINE THE WINNER OF A SINGLE ROUND***
-function playRound(userChoice, cpuChoice){
-    roundElem.textContent = round;
-    if(userChoice === cpuChoice){ //Round draw
-        results.textContent = `Round Draw. Both players chose ${userChoice}.`;
+function playRound(playerChoice, cpuChoice){
+    //Display current round information
+    roundPar.textContent = round;
+    playerChoicePar.textContent = playerChoice;
+    cpuChoicePar.textContent = cpuChoice;
+    if(playerChoice === cpuChoice){ //round draw
+        winnerPar.textContent = `Round draw. Both players chose ${playerChoice}.`;
         return;
     }
-    else if((userChoice === ROCK && cpuChoice === SCISSORS) ||
-    (userChoice === SCISSORS && cpuChoice === PAPER) || 
-    (userChoice === PAPER && cpuChoice === ROCK)){ //User won the current round
-        userScoreElem.textContent = ++userScore;
-        results.textContent = `You won! ${userChoice} beats ${cpuChoice}.`;
+    else if((playerChoice === ROCK && cpuChoice === SCISSORS) ||
+    (playerChoice === SCISSORS && cpuChoice === PAPER) || 
+    (playerChoice === PAPER && cpuChoice === ROCK)){ //Player won the current round
+        playerScorePar.textContent = ++playerScore;
+        winnerPar.textContent = `You won! ${playerChoice} beats ${cpuChoice}.`;
     }
-    else{ //User lost the current round
-        cpuScoreElem.textContent = ++cpuScore;
-        results.textContent = `You lose. ${cpuChoice} beats ${userChoice}.`;
+    else{ //Player lost the current round
+        cpuScorePar.textContent = ++cpuScore;
+        winnerPar.textContent = `You lost. ${cpuChoice} beats ${playerChoice}.`;
     }
     ++round;
 }
 
 //***INITIATE A GAME***
 function playGame(clickEvent){
-    let userChoice = getHumanChoice(clickEvent.target.id);
+    let playerChoice = getPlayerChoice(clickEvent.target.id);
     let cpuChoice = getComputerChoice();
-    playRound(userChoice, cpuChoice);
-    if(userScore >= MAX_POINTS || cpuScore >= MAX_POINTS) displayResults();
+    playRound(playerChoice, cpuChoice);
+    if(playerScore >= MAX_POINTS || cpuScore >= MAX_POINTS) displayResults();
 }
 
 //***ADD RESULTS TO PAGE***/
 function displayResults(){
-    if(userScore > cpuScore){ //User won the game
-        results.textContent = "You won the game!";
-        results.className = "user-won"; //initiate user won color styling
+    if(playerScore > cpuScore){ //Player won the game
+        winnerPar.textContent = "You won the game!";
+        winnerPar.className = "player-won"; //initiate player won color styling
     }
-    else if(cpuScore > userScore){ //User lost the game
-        results.textContent = "You lost the game.";
-        results.className = "user-lost"; //initiate user lost color styling
+    else if(cpuScore > playerScore){ //Player lost the game
+        winnerPar.textContent = "You lost the game.";
+        winnerPar.className = "player-lost"; //initiate player lost color styling
     }
     else{ //Game draw
-        results.textContent = "Game draw. No winner.";
-        results.className = ''; //remove color styling
+        winnerPar.textContent = "Game draw. No winner.";
+        winnerPar.className = "game-draw"; //initiate game draw color styling
     }
     buttonSelections.classList.toggle("hidden"); //hide rps buttons when the game ends
-    restartButton.classList.toggle("hidden"); //show the restart game button
+    restartButton.parentNode.classList.toggle("hidden"); //show the restart game button
 }
 
 //***RESTART THE GAME***/
 function restartGame(){
+    //reset game record
     round = 1;
-    userScore = 0;
+    playerScore = 0;
     cpuScore = 0;
-    results.textContent = '';
-    results.className = '';
-    roundElem.textContent = round;
-    userScoreElem.textContent = userScore;
-    cpuScoreElem.textContent = cpuScore;
-    restartButton.classList.toggle("hidden"); //show the rps buttons for a new game
-    buttonSelections.classList.toggle("hidden"); //hide the restart game button
+    roundPar.textContent = round;
+    playerScorePar.textContent = playerScore;
+    cpuScorePar.textContent = cpuScore;
+    playerChoicePar.textContent = "...";
+    cpuChoicePar.textContent = "...";
+    winnerPar.textContent = "Choose Rock, Paper, or Scissors to start the game...";
+    winnerPar.removeAttribute("class");
+    restartButton.parentNode.classList.toggle("hidden"); //hide the restart game button
+    buttonSelections.classList.toggle("hidden"); //show the rps buttons for a new game
 }
 
 //DOM References
-const resultsContainer = document.querySelector(".game-results");
 const buttonSelections = document.querySelector(".button-selections");
 const restartButton = document.querySelector("#restart-game");
-const roundElem = document.querySelector("#round");
-const userScoreElem = document.querySelector("#user-score");
-const cpuScoreElem = document.querySelector("#computer-score");
-const results = document.createElement("p");
-resultsContainer.appendChild(results);
+const roundPar = document.querySelector("#round");
+const playerScorePar = document.querySelector("#player-score");
+const cpuScorePar = document.querySelector("#computer-score");
+const playerChoicePar = document.querySelector("#player-choice");
+const cpuChoicePar = document.querySelector("#computer-choice");
+const winnerPar = document.querySelector("#game-winner");
 
 //Event Listeners
 buttonSelections.addEventListener("click", playGame);

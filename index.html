@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors</title>
-    <style>
-        body{
-            text-align: center;
-        }
-        .user-won{
-            color: green;
-        }
-        .user-lost{
-            color: red;
-        }
-        #restart-game{
-            background-color: rgb(104, 104, 244);
-            color: white;
-            border-radius: 4px;
-            padding: 4px 8px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <h1 id="game-title">ROCK PAPER SCISSORS GAME</h1>
-    <h3 id="game-results"></h3>
-    <button id="restart-game">PLAY AGAIN</button>
-    <script src="./script.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rock Paper Scissors</title>
+        <link rel="stylesheet" href="./styles.css">
+        <script src="./script.js" defer></script>
+    </head>
+    <body>
+        <h1 id="game-title">ROCK PAPER SCISSORS GAME</h1>
+        <div class="game-results">
+            <p>Round: <span id="round">1</span></p>
+            <p>User Score: <span id="user-score">0</span>/5</p>
+            <p>Computer Score: <span id="computer-score">0</span>/5</p>
+        </div>
+        <div class="button-selections">
+            <button id="rock-selection">ROCK</button>
+            <button id="paper-selection">PAPER</button>
+            <button id="scissors-selection">SCISSORS</button>
+        </div>
+        <button class="hidden" id="restart-game">Play Again</button>
+    </body>
 </html>

@@ -9,7 +9,6 @@ const SCISSORS = "Scissors";
 let round = 1;
 let userScore = 0;
 let cpuScore = 0;
-let gameOver = false;
 
 //***CALCULATE THE COMPUTER'S CHOICE***
 function getComputerChoice(){
@@ -62,10 +61,7 @@ function playGame(clickEvent){
     let userChoice = getHumanChoice(clickEvent.target.id);
     let cpuChoice = getComputerChoice();
     playRound(userChoice, cpuChoice);
-    if(userScore >= MAX_POINTS || cpuScore >= MAX_POINTS){
-        gameOver = true;
-        displayResults();
-    }
+    if(userScore >= MAX_POINTS || cpuScore >= MAX_POINTS) displayResults();
 }
 
 //***ADD RESULTS TO PAGE***/
@@ -82,7 +78,8 @@ function displayResults(){
         results.textContent = "Game draw. No winner.";
         results.className = ''; //remove color styling
     }
-    restartButton.classList.toggle("hidden");
+    buttonSelections.classList.toggle("hidden"); //hide rps buttons when the game ends
+    restartButton.classList.toggle("hidden"); //show the restart game button
 }
 
 //***RESTART THE GAME***/
@@ -90,13 +87,13 @@ function restartGame(){
     round = 1;
     userScore = 0;
     cpuScore = 0;
-    gameOver = false;
     results.textContent = '';
     results.className = '';
     roundElem.textContent = round;
     userScoreElem.textContent = userScore;
     cpuScoreElem.textContent = cpuScore;
-    restartButton.classList.toggle("hidden");
+    restartButton.classList.toggle("hidden"); //show the rps buttons for a new game
+    buttonSelections.classList.toggle("hidden"); //hide the restart game button
 }
 
 //DOM References
@@ -110,8 +107,5 @@ const results = document.createElement("p");
 resultsContainer.appendChild(results);
 
 //Event Listeners
-buttonSelections.addEventListener("click", (event) => {
-    if(!gameOver) playGame(event);
-});
-
+buttonSelections.addEventListener("click", playGame);
 restartButton.addEventListener("click", restartGame);

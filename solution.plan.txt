@@ -14,53 +14,73 @@ on the player with the most points.
     * The winner of each round is announced.
 
 PLAN:
-    * UI - No user interface, program is executed on the console.
-    * Inputs - User choice (String)
+    * UI -
+        User score display
+        Computer score display
+        round display
+        RPS button selections
+        game results display
+    * Inputs - User choice (click event) from the user's button selection
     * Outputs - 
-        User choice (String)
-        Computer's Choice (String), 
-        User Score (number),
-        Computer Score (number), 
-        Round winner (String),
+        current round (number)
+        User choice (String) based on the button selection
+        Computer's Choice (String) based on the calculation
+        User Score (number)
+        Computer Score (number)
+        round winner (string) 
         Game Winner (string)
     * Process - 
-        Get user choice,
-        generate computers choice, 
-        determine winner of each round, 
-        update score board,
-        display round winner, 
-        determine the game winner, 
-        display game winner.
+        Get user choice
+        generate computers choice
+        display current round
+        determine winner of each round
+        update score board 
+        determine the game winner
+        display game results
 
 ALGORITHM:
-    FOR five rounds
-        DISPLAY the current scores
-        GET user choice
-        CALCULATE the computer's random choice
-        IF the user quits the game THEN 
-            TERMINATE the game
-        ENDIF
-        IF both choices are the same THEN 
-            DISPLAY draw
-            RESTART the round
-        ELSE-IF user choice is Rock AND computer chose Scissors,
-        OR user choice is Scissors AND computer chose Paper, OR
-        user choice is Paper AND computer chose Rock THEN
-            INCREMENT user score
-            DISPLAY that the user won the current round
-        ELSE
-            INCREMENT computer score 
-            DISPLAY that the user lost the current round
-        ENDIF
-    ENDFOR
-    IF user score is greater than computer score THEN
-        DISPLAY that the user won the game
-    ELSE-IF computer score is greater than user score THEN
-        DISPLAY that the yser lost the game
-    ELSE
-        DISPLAY a game draw
-    ENDIF
-    CALL playAgain WHEN user clicks the reset button
-        set user score to 0
-        set cpu score to 0
-        CALL playGame
+    LISTEN for button selections, respond as long as game is NOT over
+        CALL the play game function
+            GET user choice
+            CALCULATE the computer's random choice
+                CALL the play round function and PASS player choices
+                    DISPLAY current round
+                    IF both choices are the same THEN 
+                        DISPLAY draw
+                        EXIT the round 
+                    ELSE-IF user choice is Rock AND computer chose Scissors,
+                    OR user choice is Scissors AND computer chose Paper, OR
+                    user choice is Paper AND computer chose Rock THEN
+                        INCREMENT user score
+                    ELSE
+                        INCREMENT computer score 
+                    ENDIF
+                    DISPLAY player scores
+                    DISPLAY player choices
+                    INCREMENT the round
+                ENDCALL
+            IF one or both users reach 5 points THEN
+                SET game over
+                CALL display results
+                    IF user score is greater than computer score THEN
+                        DISPLAY that the user won the game
+                    ELSE-IF computer score is greater than user score THEN
+                        DISPLAY that the user lost the game
+                    ELSE
+                        DISPLAY a game draw
+                    ENDIF
+                    SET the play again button to not hidden
+                ENDCALL
+            ENDIF
+        ENDCALL
+    ENDLISTEN
+    
+    LISTEN for reset game
+        CALL restart game function
+            SET user score to 0
+            SET cpu score to 0
+            SET round back to 1
+            SET game over to false
+            RESET UI display elements
+            SET reset button back to hidden for the new game
+    ENDLISTEN

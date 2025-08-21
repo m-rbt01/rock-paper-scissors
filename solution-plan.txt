@@ -1,0 +1,86 @@
+PROBLEM: Create a five-round Rock Paper Scissors game played by 
+the user vs. the computer. The user must provide their choice, 
+and it will be compared against the computer's predetermined 
+choice. The winner will be announced after the five rounds, based
+on the player with the most points. 
+    * Rock beats Scissors, Scissors beats Paper, and Paper beats
+      Rock.
+    * Computer choice is randomly generated, and returned by a 
+      function.
+    * User choice function is case-insensitive, prompting the
+      user for their choice.
+    * The program keeps track of the winner of each round with 
+      scores for both players.
+    * The winner of each round is announced.
+
+PLAN:
+    * UI -
+        User score display
+        Computer score display
+        round display
+        RPS button selections
+        game results display
+    * Inputs - User choice (click event) from the user's button selection
+    * Outputs - 
+        current round (number)
+        User choice (String) based on the button selection
+        Computer's Choice (String) based on the calculation
+        User Score (number)
+        Computer Score (number)
+        round winner (string) 
+        Game Winner (string)
+    * Process - 
+        Get user choice
+        generate computers choice
+        display current round
+        determine winner of each round
+        update score board 
+        determine the game winner
+        display game results
+
+ALGORITHM:
+    LISTEN for button selections, respond as long as game is NOT over
+        CALL the play game function
+            GET user choice
+            CALCULATE the computer's random choice
+                CALL the play round function and PASS player choices
+                    DISPLAY current round
+                    IF both choices are the same THEN 
+                        DISPLAY draw
+                        EXIT the round 
+                    ELSE-IF user choice is Rock AND computer chose Scissors,
+                    OR user choice is Scissors AND computer chose Paper, OR
+                    user choice is Paper AND computer chose Rock THEN
+                        INCREMENT user score
+                    ELSE
+                        INCREMENT computer score 
+                    ENDIF
+                    DISPLAY player scores
+                    DISPLAY player choices
+                    INCREMENT the round
+                ENDCALL
+            IF one or both users reach 5 points THEN
+                SET game over
+                CALL display results
+                    IF user score is greater than computer score THEN
+                        DISPLAY that the user won the game
+                    ELSE-IF computer score is greater than user score THEN
+                        DISPLAY that the user lost the game
+                    ELSE
+                        DISPLAY a game draw
+                    ENDIF
+                    SET the play again button to not hidden
+                ENDCALL
+            ENDIF
+        ENDCALL
+    ENDLISTEN
+    
+    LISTEN for reset game
+        CALL restart game function
+            SET user score to 0
+            SET cpu score to 0
+            SET round back to 1
+            SET game over to false
+            RESET UI display elements
+            SET reset button back to hidden for the new game
+    ENDLISTEN

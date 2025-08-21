@@ -1,13 +1,31 @@
 body{
-    text-align: center;
-}
-.user-won{
-    color: rgb(0, 179, 0);
-}
-.user-lost{
-    color: rgb(176, 0, 0);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(172, 172, 172);
+    margin: 0px;
 }
 
+/*---------Winner Container--------*/
+.player-won{
+    color: rgb(0, 153, 0);
+}
+.player-lost{
+    color: rgb(255, 0, 0);
+}
+
+.game-draw{
+    color: rgb(66, 65, 65);
+}
+
+.player-won, .player-lost, .game-draw{
+    font-size: 30px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/*------RPS and Reset Buttons------*/
 .hidden{
     display: none;
 }
@@ -16,9 +34,55 @@ button{
     border-radius: 4px;
     padding: 4px 8px;
     cursor: pointer;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+button#rock-selection{
+    background-color: brown;
+}
+
+button#paper-selection{
+    background-color: lightgray;
+}
+
+button#scissors-selection{
+    background-color: orange;
 }
 
 button#restart-game{
     background-color: rgb(104, 104, 244);
     color: white;
+}
+
+/*----------Main Container---------*/
+#game-title{
+    font-size: 60px;
+    font-weight: 700;
+}
+
+div.game-results{
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    font-size: 20px;
+    text-align: center;
+}
+
+div.game-results div#game-winner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    font-style: italic;
+}
+
+div.score-board, div.player-choices{
+    display: flex;
+    justify-content: space-between;
+}
+
+div.button-selections, div.game-over{
+    flex: 2;
 }

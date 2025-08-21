@@ -1,14 +1,15 @@
 //GLOBAL CONSTANTS 
 const NUM_CHOICES = 3; //number of choices available
-const NUM_ROUNDS = 5; //total number of rounds within a game 
-const ROCK = "rock";
-const PAPER = "paper";
-const SCISSORS = "scissors";
-const QUIT = -1; //user quit sentinel 
+const MAX_POINTS = 5; //total number of points for a player to win a single game 
+const ROCK = "Rock";
+const PAPER = "Paper";
+const SCISSORS = "Scissors";
 
 //GLOBAL VARIABLES
+let round = 1;
 let userScore = 0;
 let cpuScore = 0;
+let gameOver = false;
 
 //***CALCULATE THE COMPUTER'S CHOICE***
 function getComputerChoice(){
@@ -25,84 +26,92 @@ function getComputerChoice(){
 }
 
 //***GET THE USER'S CHOICE***
-function getHumanChoice(){
-    let temp; //holds user choice
-    try{ //Get user choice, remove potential whitespace from ends and convert to lowercase (case-insensitive)
-        temp = prompt(`"Rock" | "Paper" | "Scissors"? Please Enter Your Choice: (or click Cancel to quit)`).trim().toLowerCase();
+function getHumanChoice(targetId){
+    switch(targetId){
+        case "rock-selection":
+            return ROCK;
+        case "paper-selection":
+            return PAPER;
+        case "scissors-selection":
+            return SCISSORS;
     }
-    catch(error){ //User canceled input, return to the current round
-        return QUIT;
-    }
-    if((temp != ROCK) && (temp != PAPER) && (temp != SCISSORS)){ //Otherwise, validate user input
-        alert(`${temp} is not a valid choice.`);
-        return getHumanChoice(); //get input again
-    }
-    return temp; //return valid input
 }
 
 //***DETERMINE THE WINNER OF A SINGLE ROUND***
 function playRound(userChoice, cpuChoice){
-    if(userChoice === QUIT){ //cancel the current round if the user quit
-        return QUIT;
-    }
-    //Otherwise, evaluate and display the winner of the current round
+    roundElem.textContent = round;
     if(userChoice === cpuChoice){ //Round draw
-        alert(`Round Draw.\nBoth players chose ${userChoice}`);
-        return playRound(getHumanChoice(), getComputerChoice()); //restart current round
+        results.textContent = `Round Draw. Both players chose ${userChoice}.`;
+        return;
     }
     else if((userChoice === ROCK && cpuChoice === SCISSORS) ||
     (userChoice === SCISSORS && cpuChoice === PAPER) || 
     (userChoice === PAPER && cpuChoice === ROCK)){ //User won the current round
-        ++userScore;
-        alert(`You won!\n${userChoice} beats ${cpuChoice}`);
+        userScoreElem.textContent = ++userScore;
+        results.textContent = `You won! ${userChoice} beats ${cpuChoice}.`;
     }
     else{ //User lost the current round
-        ++cpuScore;
-        alert(`You lose.\n${cpuChoice} beats ${userChoice}`);
+        cpuScoreElem.textContent = ++cpuScore;
+        results.textContent = `You lose. ${cpuChoice} beats ${userChoice}.`;
     }
+    ++round;
 }
 
 //***INITIATE A GAME***
-function playGame(){
-    //Iterate through the total number of rounds
-    for(let i = 1; i <= NUM_ROUNDS; i++){
-        alert(`-------------Round ${i}/${NUM_ROUNDS}-------------\nUser Score: ${userScore} CPU Score: ${cpuScore}`); //display the current round and scores
-        if(playRound(getHumanChoice(), getComputerChoice()) === QUIT){ //play a single round, but if the user quit then end the game
-            alert("Thank you for playing!");
-            break;
-        } 
+function playGame(clickEvent){
+    let userChoice = getHumanChoice(clickEvent.target.id);
+    let cpuChoice = getComputerChoice();
+    playRound(userChoice, cpuChoice);
+    if(userScore >= MAX_POINTS || cpuScore >= MAX_POINTS){
+        gameOver = true;
+        displayResults();
     }
-    //Display the game's winner
-    displayResults();
 }
 
 //***ADD RESULTS TO PAGE***/
 function displayResults(){
-    const resultsPar = document.getElementById("game-results"); //get the page's existing header element 
-    resultsPar.innerHTML = `-------------Results-------------<br>User Score: ${userScore} CPU Score: ${cpuScore}<br>`; //display final scores
-    //display the winner
     if(userScore > cpuScore){ //User won the game
-        resultsPar.innerHTML += "You won the game!";
-        resultsPar.className = "user-won"; //initiate user won color styling
+        results.textContent = "You won the game!";
+        results.className = "user-won"; //initiate user won color styling
     }
     else if(cpuScore > userScore){ //User lost the game
-        resultsPar.innerHTML += "You lost the game.";
-        resultsPar.className = "user-lost"; //initiate user lost color styling
+        results.textContent = "You lost the game.";
+        results.className = "user-lost"; //initiate user lost color styling
     }
     else{ //Game draw
-        resultsPar.innerHTML += "Game draw. No winner.";
-        resultsPar.className = ""; //remove color styling
+        results.textContent = "Game draw. No winner.";
+        results.className = ''; //remove color styling
     }
+    restartButton.classList.toggle("hidden");
 }
 
 //***RESTART THE GAME***/
-function playAgain(){
+function restartGame(){
+    round = 1;
     userScore = 0;
     cpuScore = 0;
-    playGame();
+    gameOver = false;
+    results.textContent = '';
+    results.className = '';
+    roundElem.textContent = round;
+    userScoreElem.textContent = userScore;
+    cpuScoreElem.textContent = cpuScore;
+    restartButton.classList.toggle("hidden");
 }
 
-//On Page Load
-const restartButton = document.getElementById("restart-game"); //get the page's existing button element
-restartButton.addEventListener("click", playAgain); //play game again when the user clicks restart button
-playGame() //start the game
+//DOM References
+const resultsContainer = document.querySelector(".game-results");
+const buttonSelections = document.querySelector(".button-selections");
+const restartButton = document.querySelector("#restart-game");
+const roundElem = document.querySelector("#round");
+const userScoreElem = document.querySelector("#user-score");
+const cpuScoreElem = document.querySelector("#computer-score");
+const results = document.createElement("p");
+resultsContainer.appendChild(results);
+
+//Event Listeners
+buttonSelections.addEventListener("click", (event) => {
+    if(!gameOver) playGame(event);
+});
+
+restartButton.addEventListener("click", restartGame);

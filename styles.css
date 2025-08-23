@@ -12,7 +12,7 @@ body{
     color: rgb(0, 153, 0);
 }
 .player-lost{
-    color: rgb(255, 0, 0);
+    color: rgb(208, 0, 0);
 }
 
 .game-draw{
@@ -26,33 +26,22 @@ body{
 }
 
 /*------RPS and Reset Buttons------*/
-.hidden{
-    display: none;
-}
-
 button{
-    border-radius: 4px;
-    padding: 4px 8px;
     cursor: pointer;
-    font-weight: 700;
-    font-size: 20px;
 }
 
-button#rock-selection{
-    background-color: brown;
-}
-
-button#paper-selection{
-    background-color: lightgray;
-}
-
-button#scissors-selection{
-    background-color: orange;
+button#rock-button, button#paper-button, button#scissors-button{
+    background-color: transparent;
+    border: none;
+    padding: 0;
 }
 
 button#restart-game{
     background-color: rgb(104, 104, 244);
+    border-radius: 4px;
+    padding: 4px 8px;
     color: white;
+    font-size: 20px;
 }
 
 /*----------Main Container---------*/
@@ -70,12 +59,11 @@ div.game-results{
     text-align: center;
 }
 
-div.game-results div#game-winner{
+div.game-results div#game-msg{
     display: flex;
     justify-content: center;
     align-items: center;
     flex: 1;
-    font-style: italic;
 }
 
 div.score-board, div.player-choices{
@@ -83,6 +71,21 @@ div.score-board, div.player-choices{
     justify-content: space-between;
 }
 
+div.button-selections{
+    display: flex;
+    align-items: self-start;
+    gap: 50px;
+}
+
 div.button-selections, div.game-over{
     flex: 2;
+}
+
+img{
+    max-height: 100px;
+}
+
+/*--------Hide Elements-------*/
+div.hidden{
+    display: none;
 }

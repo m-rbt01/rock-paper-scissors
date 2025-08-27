@@ -10,7 +10,7 @@ This project is intended to showcase information processing and DOM manipulation
 
 ## Contact
 Christian Donjuan - [LinkedIn](https://www.linkedin.com/in/christian-donjuan/) - chdonjuan.1@gmail.com  
-Live Preview: 
+Live Preview: https://m-rbt01.github.io/rock-paper-scissors/
 
 ## Acknowledgements
 This project uses images from the following artists:

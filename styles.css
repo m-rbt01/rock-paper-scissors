@@ -10,8 +10,7 @@ html, body{
     height: 100%;
 }
 body{
-    background-color: rgb(172, 172, 172);
-    border: 4px solid green;
+    background-color: rgb(80, 127, 80);
 }
 
 /*---------Winner Container--------*/
@@ -29,12 +28,17 @@ body{
 .player-won, .player-lost, .game-draw{
     font-size: 30px;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 /*------RPS and Reset Buttons------*/
 button{
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+button:hover{
+    transform: scale(1.1);
 }
 
 button#rock-button, button#paper-button, button#scissors-button{
@@ -58,13 +62,14 @@ button#restart-game{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    border: 2px solid black;
 }
 
 #game-title{
     font-size: 60px;
+}
+
+.text-container{
     font-weight: 700;
-    border: 2px solid blue;
 }
 
 div.game-results{
@@ -76,7 +81,6 @@ div.game-results{
     justify-content: space-around;
     font-size: 20px;
     text-align: center;
-    border: 2px solid blue;
 }
 
 div.score-board, div.player-choices{
@@ -86,9 +90,10 @@ div.score-board, div.player-choices{
 
 div.button-selections, div.game-over{
     width: 700px;
+    height: 110px;
     display: flex;
     justify-content: space-around;
-    border: 2px solid blue;
+    align-items: center;
 }
 
 img{
